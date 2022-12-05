@@ -6,9 +6,10 @@ const expiration = '2h';
 
 module.exports = {
   // function for our authenticated routes
+  //use this in apollo to get context and authenticate.
   authMiddleware: function (req, res, next) {
-    // allows token to be sent via  req.query or headers
-    let token = req.query.token || req.headers.authorization;
+    // allows token to be sent via  req.query or headers or body. Trying to get studio to work.
+    let token = req.body.token || req.query.token || req.headers.authorization;
 
     // ["Bearer", "<tokenvalue>"]
     if (req.headers.authorization) {
