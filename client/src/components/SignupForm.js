@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-
-import { createUser } from '../utils/API';
+//no mor ecreat in the old api.
+//import { createUser } from '../utils/API';
+import { useMutation } from '@apollo/client';
+import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const SignupForm = () => {
@@ -11,6 +13,8 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
+  // set apollo up.
+  const [addUser, { error }] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -28,15 +32,17 @@ const SignupForm = () => {
     }
 
     try {
-      const response = await createUser(userFormData);
+      // old way of doing it removed and replaced with apollo as drop in as possible.
+     /* const response = await createUser(userFormData);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
-      const { token, user } = await response.json();
+      const { token, user } = await response.json();*/
+      const { user } = await addUser({ variables: { ...userFormData } });
       console.log(user);
-      Auth.login(token);
+      Auth.login(user.login.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
