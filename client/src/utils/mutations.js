@@ -38,7 +38,7 @@ export const LOGIN_USER = gql`
 
 //add user as above, matching all the way through the application.
 export const ADD_USER = gql`
-  mutation createUser($username: String!, password: String!, email: String!) {
+  mutation createUser($username: String!, $password: String!, $email: String!) {
     createUser(username: $username, password: $password, email: $email) {
       token
       user {
