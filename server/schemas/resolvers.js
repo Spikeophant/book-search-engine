@@ -13,11 +13,15 @@ const resolvers = {
       }
       //errrrrrror
       throw new AuthenticationError('Unauthorized');
+    },
+    users: async (_) => {
+      const users = await User.find({});
+      return users;
     }
   },
   Mutation: {
     //save book, pass parent, saveBookInput, and the user (from current context.)
-    savebook: async (_, { saveBookInput }, {user}) => {
+    saveBook: async (_, { saveBookInput }, {user}) => {
       if (user) {
         //update user if we have one.
         const update = await User.findByIdAndUpdate({ _id: user.id },
