@@ -44,7 +44,9 @@ const resolvers = {
         throw new AuthenticationError('Incorrect email or password.  Please try again.');
       }
       //if this isn't the correct password throw authentication error.
-      if (!user.isCorrectPassword(password)) {
+      //break into var and if so we can actually await this always gets me once.
+      const isCorrectPassword = await user.isCorrectPassword(password);
+      if (!isCorrectPassword) {
         throw new AuthenticationError('Incorrect email of password.  Please try again.');
       }
       //if the email and password match a user, return the token and user.
