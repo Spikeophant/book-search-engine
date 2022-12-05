@@ -12,14 +12,14 @@ const typeDefs = gql`
   type Book {
     authors: [String]
     description: String
-    bookId: String
+    bookId: ID!
     image: String
     link: String
     title: String
   }
     
   input saveBookInput {
-    bookId: String
+    bookId: ID!
     authors: [String]
     description: String
     image: String
