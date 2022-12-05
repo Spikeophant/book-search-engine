@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
+//We only want the google search books from the api file in here now.  Apollo will serve the rest.
+import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+
+//import the Apollo stuff here.
+import { useMutation } from '@apollo/client';
+import { SAVE_BOOK } from '../utils/mutations';
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -13,6 +18,9 @@ const SearchBooks = () => {
 
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+
+  //add hook for using the mutation to ave the book.  Name it saveBook and make minor changes.
+  const [saveBook, { error }] = useMutation(SAVE_BOOK);
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -63,13 +71,16 @@ const SearchBooks = () => {
     if (!token) {
       return false;
     }
-
+//refactor this.  we still want to try.
     try {
-      const response = await saveBook(bookToSave, token);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+      //but we're no longer hitting an api route.
+      //const response = await saveBook(bookToSave, token);
+      //call our hook we created above.
+      const { data } = await saveBook({ variables: bookToSave });
+      //we no longer need this due to hook handling.
+      //if (!response.ok) {
+      //  throw new Error('something went wrong!');
+      //}
 
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
