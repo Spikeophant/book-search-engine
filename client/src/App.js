@@ -13,7 +13,7 @@ import Navbar from './components/Navbar';
 //read these https://www.apollographql.com/docs/react/api/link/introduction
 //create httplink for authentication middleware and headers.
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: '/graphql',
 });
 
 //set context.

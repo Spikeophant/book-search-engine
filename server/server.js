@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
   //if not, use apollo.
 //} else {
   //if we use apollo, just serve the front end.  This line is technically too long but looks way better like this.
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../client/buildindex.html')));
+//app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../client/build/index.html')));
 //}
 //Create Apollo server instance.  maybe we can just do this without the const, and inline it?  I'll try after it all works.
 // TODO: make this slicker.

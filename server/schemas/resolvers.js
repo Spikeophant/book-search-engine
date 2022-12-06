@@ -24,7 +24,7 @@ const resolvers = {
     saveBook: async (_, { saveBookInput }, {user}) => {
       if (user) {
         //update user if we have one.
-        const update = await User.findByIdAndUpdate({ _id: user.id },
+        const update = await User.findByIdAndUpdate({ _id: user._id },
           //add to set adds teh input book to the current array of books
           { $addToSet: { savedBooks: input } },
           //return the updated document, and validate.
@@ -50,7 +50,8 @@ const resolvers = {
         throw new AuthenticationError('Incorrect email of password.  Please try again.');
       }
       //if the email and password match a user, return the token and user.
-      return { token: signToken(user), user };
+      const token = signToken(user);
+      return { token, user };
     },
     createUser: async (_, args) => {
       const user = await User.create(args);
